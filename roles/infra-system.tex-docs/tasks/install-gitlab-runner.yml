@@ -1,0 +1,35 @@
+---
+- name: Add activation key for GitLab
+  redhat_subscription:
+    state: present
+    activationkey: 'gitlab'
+    org_id: "{{ rhsm_org | default(omit) }}"
+    force_register: yes
+
+- name: Install GitLab Runner
+  yum:
+    name: "gitlab-runner"
+    state: present
+
+- name: Add sudoers rules
+  template:
+    force: yes
+    src: gl-runner.j2
+    dest: /etc/sudoers.d/gl-runner
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Registration GitLab Runner
+  gitlab_runner:
+    api_url: "{{ gitlab_api_url }}"
+    api_token: "{{ access_token }}"
+    registration_token: "{{ runner_reg_token }}"
+    description: TeX Docs Shell
+    state: present
+    active: True
+    tag_list: ['tex-docs']
+    run_untagged: False
+    locked: False
+  when: (runner_reg | bool == true) and (runner_reg is defined)
+  tags:
+    - reg-runner
+...

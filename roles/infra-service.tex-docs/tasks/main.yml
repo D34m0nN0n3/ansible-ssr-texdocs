@@ -1,0 +1,6 @@
+---
+- name: Base Docs
+  include: add-base-docs.yml
+
+#- name: Base Docs
+#  include: add-template-docs.yml

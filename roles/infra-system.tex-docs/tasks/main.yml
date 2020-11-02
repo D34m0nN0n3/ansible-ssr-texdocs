@@ -1,0 +1,62 @@
+---
+- name: Add user MKdocs
+  block:
+    - set_fact:
+        rand_pass: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits,punctuation length=24') }}"
+
+    - name: Create account MKdocs
+      user:
+        name: mkdocs
+        groups: systemd-journal
+        password: "{{ rand_pass | password_hash('sha512') }}"
+        update_password: on_create
+        shell: /bin/bash
+        home: /var/mkdocs
+        system: yes
+        comment: 'User for MKdocs'
+
+    - name: Add sudoers rules
+      template:
+        force: yes
+        src: mkdocs.j2
+        dest: /etc/sudoers.d/mkdocs
+        validate: '/usr/sbin/visudo -cf %s'
+
+- name: Check installed MKdocs
+  stat: 
+    path: "/var/mkdocs/.local/bin/mkdocs"
+  register: mkdocs_installed
+
+- name: Check MKdocs version
+  command: "/var/mkdocs/.local/bin/mkdocs --version"
+  register: mkdocs_version
+  changed_when: False
+  failed_when: False
+  when: mkdocs_installed.stat.exists == True
+  become: True
+  become_user: mkdocs
+
+- name: MKdocs
+  include: install-mkdocs.yml
+  when: not (mkdocs_version.rc == 0)
+  tags:
+    - install_mkdocs
+
+- name: Check installed GitLab-runner
+  stat: 
+    path: "/usr/bin/gitlab-runner"
+  register: gl_runner_installed
+
+- name: Check GitLab-runner version
+  command: "/usr/bin/gitlab-runner --version"
+  register: gl_runner_version
+  changed_when: False
+  failed_when: False
+  when: gl_runner_installed.stat.exists == True
+
+- name: GitLab-runner
+  include: install-gitlab-runner.yml
+  when: not (gl_runner_version.rc == 0)
+  tags:
+    - install_gitlab_runner
+...

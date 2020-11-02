@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+    - include_role:
+        name: infra-system.tex-docs
+
+    - include_role:
+        name: infra-service.tex-docs
+...

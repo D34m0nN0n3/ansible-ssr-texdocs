@@ -1,0 +1,4 @@
+#{{ ansible_managed }
+Cmnd_Alias RSMAKEDOCS = /var/mkdocs/.local/bin/mkdocs
+Cmnd_Alias NORSWEBSERVICE = /usr/bin/systemctl status nginx*, /usr/bin/systemctl start nginx*, /usr/bin/systemctl restart nginx*, /usr/bin/systemctl stop nginx*
+gitlab-runner  ALL=(ALL)  NOPASSWD: RSMAKEDOCS, NORSWEBSERVICE

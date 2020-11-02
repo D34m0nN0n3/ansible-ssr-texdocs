@@ -1,0 +1,116 @@
+---
+- name: Check installed dependencies
+  block:
+    - name: Check installed MKdocs
+      stat: 
+        path: "/var/mkdocs/.local/bin/mkdocs"
+      register: mkdocs_installed
+
+    - debug:
+        msg: Please install MKdocs
+      when: mkdocs_installed.stat.exists == False
+      register: mkdocs_result
+
+    - name: End the play
+      meta: end_play
+      when: not (mkdocs_result is skipped)
+
+    - name: Check installed NGINX
+      stat: 
+        path: "/usr/sbin/nginx"
+      register: nginx_installed
+
+    - debug:
+        msg: Please install NGINX
+      when: nginx_installed.stat.exists == False
+      register: nginx_result
+
+    - name: End the play
+      meta: end_play
+      when: not (nginx_result is skipped)
+
+    - name: Check installed GitLab-runner
+      stat: 
+        path: "/usr/bin/gitlab-runner"
+      register: gl_runner_installed
+
+    - debug:
+        msg: Please install GitLab-runner
+      when: gl_runner_installed.stat.exists == False
+      register: gl_runner_result
+
+    - name: End the play
+      meta: end_play
+      when: not (gl_runner_result is skipped)
+
+- name: Check Tex-Docs usage
+  stat: 
+    path: "/var/www/base"
+  register: base_result
+
+- name: Create base.conf for NGINX
+  template:
+    src: base.conf.j2
+    dest: /etc/nginx/conf.d/base.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create base Tex-Docs site
+  block:
+    - name: Create temp dir
+      file:
+        path: /var/mkdocs/base
+        state: directory
+        mode: '0755'
+    
+    - name: Copy theme files
+      unarchive:
+        src: mkdocs.tar.gz
+        dest: /var/mkdocs/base
+
+    - name: Copy mkdocs config
+      copy:
+        src: ../../mkdocs.yml
+        dest: /var/mkdocs/base/mkdocs.yml
+
+    - name: Copy docs
+      synchronize:
+        src: ../../docs
+        dest: /var/mkdocs/base
+        archive: no
+        recursive: yes
+  become: True
+  become_user: mkdocs
+
+- name: Change owner docs dir
+  file: 
+    dest: /var/mkdocs/base/docs
+    owner: mkdocs
+    group: mkdocs
+    recurse: yes
+
+- name: Clear old site
+  file:
+    path: /var/www/base
+    state: absent
+
+- name: Build new site
+  command: /var/mkdocs/.local/bin/mkdocs build --site-dir /var/www/base
+  args:
+    chdir: /var/mkdocs/base/
+
+- name: Change owner web dir
+  file: 
+    dest: /var/www/base
+    owner: nginx
+    group: nginx
+    recurse: yes
+  notify:
+    - Restart_nginx
+
+- name: Clear temp
+  file:
+    path: /var/mkdocs/base
+    state: absent
+...

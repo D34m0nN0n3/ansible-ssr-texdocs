@@ -1,0 +1,42 @@
+---
+- name: Pre install requirements
+  block:
+    - name: Install dependencies
+      yum:
+        name: "{{ tex_docs_deps }}"
+        state: present
+      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8'
+
+- name: Install MKdocs python packages
+  pip:
+    name: "{{ mkdocs_packages }}"
+    executable: pip3
+    extra_args: "{{ pypi_proxy_arg | default(omit) }}"
+    state: forcereinstall
+  become: True
+  become_user: mkdocs
+
+- name: Configure NGINX
+  block:
+    - name: Disable IPv6 support
+      replace:
+        path: /etc/nginx/nginx.conf
+        regexp: '^(?:\s+listen\s+)\[::\]:80\sdefault_server;$'
+        replace: '#      listen       [::]:80 sdefault_server;'
+        backup: yes
+
+    - name: Create WEB dir
+      file:
+        path: /var/www
+        state: directory
+        owner: nginx
+        group: nginx
+        mode: '0755'
+    
+    - name: Enable NGINX
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+        masked: no
+...

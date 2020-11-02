@@ -1,0 +1,4 @@
+#{{ ansible_managed }}
+Cmnd_Alias MAKEDOCS = /var/mkdocs/.local/bin/mkdocs
+Cmnd_Alias WEBSERVICE = /usr/bin/systemctl status nginx*, /usr/bin/systemctl start nginx*, /usr/bin/systemctl restart nginx*, /usr/bin/systemctl stop nginx*
+mkdocs  ALL=(ALL)   NOPASSWD: MAKEDOCS, WEBSERVICE
