@@ -58,3 +58,14 @@ mkdocs_packages:
   - mkdocs-material-extensions==1.0
   - mkdocs-git-revision-date-localized-plugin==0.5.2
 
+pypi_proxy_arg: []
+
+gitlab_api_url: []
+
+runner_reg: False
+
+enable_satellite_repo: True
+
+rhsm_key: []
+
+rhsm_org: []

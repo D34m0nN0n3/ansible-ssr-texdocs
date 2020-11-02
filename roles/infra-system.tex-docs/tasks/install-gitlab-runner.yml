@@ -2,9 +2,10 @@
 - name: Add activation key for GitLab
   redhat_subscription:
     state: present
-    activationkey: 'gitlab'
+    activationkey: "{{ rhsm_key }}"
     org_id: "{{ rhsm_org | default(omit) }}"
     force_register: yes
+  when: (enable_satellite_repo | bool == true) and (enable_satellite_repo is defined)
 
 - name: Install GitLab Runner
   yum:
