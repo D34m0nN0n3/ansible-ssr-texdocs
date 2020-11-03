@@ -46,6 +46,7 @@ TeX Docs - сервис автоматической генерации доку
 |enable_satellite_repo | boolean        | True                  | Подключение задачи включения дополнительных пакетов    |
 |rhsm_key              | string         |                       | Ключ активации репозитория                             |
 |rhsm_org              | string         |                       | Название организации в которой опубликован репозиторий |
+|end_point             | string         |                       | Альтернативное имя в `NGINX`                           |
 
 ## Теги
 
@@ -71,7 +72,7 @@ TeX Docs - сервис автоматической генерации доку
     access_token='<you_api_token>'
     runner_reg_token='<you_reg_token>'
     rhsm_key='gitlab'
-    rhsm_org='1'
+    rhsm_org='ORG'
 ```
 
 ## Дополнительные материалы
