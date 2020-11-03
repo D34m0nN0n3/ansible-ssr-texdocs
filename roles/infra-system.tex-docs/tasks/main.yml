@@ -38,7 +38,7 @@
 
 - name: MKdocs
   include: install-mkdocs.yml
-  when: not (mkdocs_version.rc == 0)
+  when: mkdocs_version is failed
   tags:
     - install_mkdocs
 
@@ -56,7 +56,7 @@
 
 - name: GitLab-runner
   include: install-gitlab-runner.yml
-  when: not (gl_runner_version.rc == 0)
+  when: gl_runner_version is failed
   tags:
     - install_gitlab_runner
 ...
