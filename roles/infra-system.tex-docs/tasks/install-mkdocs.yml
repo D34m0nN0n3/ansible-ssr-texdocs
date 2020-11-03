@@ -11,7 +11,7 @@
   pip:
     name: "{{ mkdocs_packages }}"
     executable: pip3
-    extra_args: "{{ pypi_proxy_arg | default(omit) }}"
+    extra_args: "--ignore-installed --user {{ pypi_proxy_arg | default(omit) }}"
     state: forcereinstall
   become: True
   become_user: mkdocs
