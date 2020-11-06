@@ -1,6 +1,6 @@
 server {
         listen 80;
-        server_name {% for ip_addr in ansible_all_ipv4_addresses %} {{ ip_addr }} {% endfor %} {{ ansible_fqdn }} {% if end_point is defined %} {{ end_point }} {% endif %};
+        server_name {% for ip_addr in ansible_all_ipv4_addresses %} {{ ip_addr }} {% endfor %} {{ ansible_fqdn }}{% if end_point is defined %} {{ end_point }}{% endif %};
         root /var/www/;
         index index.html index.htm;
 
