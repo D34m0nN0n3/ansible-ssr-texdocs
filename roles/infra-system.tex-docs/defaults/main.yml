@@ -37,6 +37,8 @@ mkdocs_packages:
   - Jinja2==2.11.2
   - livereload==2.5.2
   - Markdown==3.2.1
+  - markdown-blockdiag
+  - markdown-include
   - MarkupSafe==1.1.1
   - mkdocs==1.1
   - pdfrw==0.4
@@ -56,7 +58,7 @@ mkdocs_packages:
   - mkdocs-pdf-export-plugin
   - mkdocs-material==5.3.3
   - mkdocs-material-extensions==1.0
-  - mkdocs-git-revision-date-localized-plugin==0.5.2
+  - mkdocs-git-revision-date-localized-plugin==0.5.2 
 
 pypi_proxy_arg: []
 
