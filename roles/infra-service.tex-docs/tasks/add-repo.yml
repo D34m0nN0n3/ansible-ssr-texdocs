@@ -1,0 +1,15 @@
+---
+- name: Download new git repo and build docs
+  block:
+    - name: Download repo
+      git:
+        repo: "https://{{ git_login }}:{{ git_password|urlencode }}@{{ git_server }}/{{ git_owner }}/{{ git_repo }}.git"
+        dest: "/var/mkdocs/{{ git_repo }}"
+        track_submodules: yes
+    
+    - name: Build new site
+      command: /var/mkdocs/.local/bin/mkdocs build
+      args:
+        chdir: "/var/mkdocs/{{ git_repo }}"
+  become: True
+  become_user: mkdocs

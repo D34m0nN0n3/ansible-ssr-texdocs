@@ -96,9 +96,16 @@
     state: absent
 
 - name: Build new site
-  command: /var/mkdocs/.local/bin/mkdocs build --site-dir /var/www/base
+  command: /var/mkdocs/.local/bin/mkdocs build
   args:
     chdir: /var/mkdocs/base/
+  become: True
+  become_user: mkdocs
+
+- name: Move build to web dir
+  command: mv site /var/www/base
+  args:
+    chdir: /var/mkdocs/base/ 
 
 - name: Change owner web dir
   file: 
