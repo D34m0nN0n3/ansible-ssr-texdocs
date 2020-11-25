@@ -1,9 +1,18 @@
 ---
 - name: Download new git repo and build docs
   block:
+    - name: Set http or https protocol
+      set_fact:
+          http_or_https: "{{ 'https' if git_url_ssl is defined else 'http' }}" 
+
+    - name: Enable auth if private repo
+      set_fact:
+          git_auth: "{{ git_login }}:{{ git_password|urlencode }}@"
+      when: git_private is defined 
+    
     - name: Download repo
       git:
-        repo: "https://{{ git_login }}:{{ git_password|urlencode }}@{{ git_server }}/{{ git_owner }}/{{ git_repo }}.git"
+        repo: "{{ http_or_https }}://{{ git_auth | default ('') }}{{ git_server }}/{{ git_project }}.git"
         dest: "/var/mkdocs/{{ git_repo }}"
         track_submodules: yes
     
