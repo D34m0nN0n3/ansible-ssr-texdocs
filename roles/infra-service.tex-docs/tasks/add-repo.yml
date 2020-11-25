@@ -12,13 +12,15 @@
     
     - name: Download repo
       git:
-        repo: "{{ http_or_https }}://{{ git_auth | default ('') }}{{ git_server }}/{{ git_project }}.git"
-        dest: "/var/mkdocs/{{ git_repo }}"
+        repo: "{{ http_or_https }}://{{ git_auth | default ('') }}{{ git_server }}/{{ item.key }}/{{ item.value }}.git"
+        dest: "/var/mkdocs/{{ item.value }}"
         track_submodules: yes
+      with_dict: "{{ git_project }}"
     
     - name: Build new site
       command: /var/mkdocs/.local/bin/mkdocs build
       args:
-        chdir: "/var/mkdocs/{{ git_repo }}"
+        chdir: "/var/mkdocs/{{ item.value }}"
+      with_dict: "{{ git_project }}"
   become: True
   become_user: mkdocs
