@@ -24,3 +24,8 @@
       with_dict: "{{ git_project }}"
   become: True
   become_user: mkdocs
+  loop: "{{ git_project }}"
+
+- name: Publishing site
+  block:
+    - 
