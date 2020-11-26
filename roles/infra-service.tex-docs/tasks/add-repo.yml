@@ -28,4 +28,13 @@
 
 - name: Publishing site
   block:
-    - 
+    - name: Copy builded site
+      copy:
+        src: /var/mkdocs/
+        dest: /var/www/
+        owner: nginx
+        group: nginx
+        setype: httpd_sys_content_t
+        remote_src: yes
+
+    
