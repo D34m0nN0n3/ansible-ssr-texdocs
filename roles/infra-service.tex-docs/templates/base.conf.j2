@@ -4,14 +4,25 @@ server {
         root /var/www/;
         index index.html index.htm;
 
-        location base/ {
+        location / {
           autoindex on;
           autoindex_exact_size off;
           }
 
-        location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|html|xml|otf|ttf|eot|woff|woff2|svg)$ {
+        location ~* \.(?:manifest|appcache|html?|xml|json)$ {
+          expires -1;
+          #access_log logs/static.log; # I don't usually include a static log
+          }
+
+        location ~* \.(?:css|js)$ {
+          expires 4h;
           access_log off;
-          expires 30d;
+          add_header Cache-Control "public";
+          }
+
+        location ~* ^.+\.(?:jpe?g|gif|htc|ico|png|cur|gz|otf|ttf|eot|woff|woff2|svg|svgz|mp4|ogg|ogv|webm)$ {
+          access_log off;
+          expires 7d;
           add_header Cache-Control public;
 
           ## No need to bleed constant updates. Send the all shebang in one
