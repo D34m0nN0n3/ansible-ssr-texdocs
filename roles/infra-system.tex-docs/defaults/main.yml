@@ -56,8 +56,8 @@ mkdocs_packages:
   - click-man
   - mkpdfs-mkdocs
   - mkdocs-pdf-export-plugin
-  - mkdocs-material==5.3.3
-  - mkdocs-material-extensions==1.0
+  - mkdocs-material>=5.3.3
+  - mkdocs-material-extensions>=1.0
   - mkdocs-git-revision-date-localized-plugin==0.5.2 
 
 pypi_proxy_arg: []
