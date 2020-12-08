@@ -37,4 +37,3 @@
         setype: httpd_sys_content_t
         remote_src: yes
 
-    
