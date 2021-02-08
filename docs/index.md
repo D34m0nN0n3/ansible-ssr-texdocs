@@ -47,7 +47,7 @@ TeX Docs - сервис автоматической генерации доку
 ## Файл конфигурации проекта  
 
 !!! example "mkdocs.yml"
-    ```
+    ``` yaml
     site_name: TeX Docs
     site_description: "Documentation for TeX Docs site"
     copyright: Copyright &copy; <a href="https://github.com/D34m0nN0n3">Dmitriy Prigoda</a>.
@@ -64,7 +64,11 @@ TeX Docs - сервис автоматической генерации доку
     plugins:
         - search
         - pdf-export:
-          ...
+            verbose: true
+            media_type: print
+            combined: true
+            combined_output_path: 'pdf/combined.pdf'
+            theme_handler_path: theme-handler/material.py
 
     theme:
     name: material
@@ -100,6 +104,7 @@ TeX Docs - сервис автоматической генерации доку
 | repo_url                 | Ссылка на проект в `git`                                                    |
 | nav                      | Подключаемые файлы с документацией                                          |
 | plugins                  | Подключяемые расширения                                                     |
+| combined_output_path     | Имя файла `pdf`. По умолчанию: `combined.pdf`                               |
 | theme                    | Тема оформления `html` страниц                                              |
 | extra                    | Дополнительные настройки                                                    |
 | markdown_extensions      | Модули обработки разметки                                                   |

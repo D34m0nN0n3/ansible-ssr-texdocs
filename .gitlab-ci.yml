@@ -1,14 +1,35 @@
-#before_script:
-  ##
-  ## Assuming you created the SSH_KNOWN_HOSTS variable, uncomment the
-  ## following two lines.
-  ##
-#  - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
-#  - chmod 644 ~/.ssh/known_hosts
-  ##
-  ## Run ssh-agent (inside the build environment)
-  ##
-#  - eval $(ssh-agent -s)
-#  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-#script:
-#  - echo 'success'
+    stages:
+      - cleanup
+      - clone
+      - build
+      - deploy
+    variables:
+      DIR_NAME: "TeX Docs"
+
+    cleanup_config:
+      tags:
+        - mkdocs
+      stage: cleanup
+      script:
+        - if [ -d /var/www/base/docs/"$DIR_NAME" ]; then rm -rf /home/gitlab-runner/$CI_PROJECT_NAME; fi
+    clone_config:
+      tags:
+        - mkdocs
+      stage: clone
+      script:
+        - git -C /home/gitlab-runner/ clone $CI_REPOSITORY_URL
+    build_config:
+      tags:
+        - mkdocs
+      stage: build
+      script:
+        - sudo su - mkdocs -c "cd /home/gitlab-runner/$CI_PROJECT_NAME/; mkdocs build"
+        - if ! [ -d /var/www/base/docs/"$DIR_NAME" ]; then sudo mkdir /var/www/base/docs/"$DIR_NAME"; else sudo rm -rf /var/www/base/docs/"$DIR_NAME"; sudo mkdir /var/www/base/docs/"$DIR_NAME"; fi
+    deploy_config:
+      tags:
+        - mkdocs
+      stage: deploy
+      script:
+        - cd /home/gitlab-runner/$CI_PROJECT_NAME/
+        - sudo mv site/* /var/www/base/docs/"$DIR_NAME"
+        - sudo rm -rf /home/gitlab-runner/$CI_PROJECT_NAME
