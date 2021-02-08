@@ -1,15 +1,19 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![pipeline status](http://gitlab-lb-01.gvc.oao.rzd/d34m0nn0n3/ansible-ssr-os/badges/master/pipeline.svg)](http://gitlab-lb-01.gvc.oao.rzd/d34m0nn0n3/ansible-ssr-os/-/commits/master)
 
 # TeX Docs
 Copyright (C) 2020 Dmitriy Prigoda deamon.none@gmail.com This script is free software: Everyone is permitted to copy and distribute verbatim copies of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.
 
 ## Содержание
 
-1. [Общее описание](#общее-описание)
-2. [Параметры](#параметры)
-3. [Теги](#теги)
-4. [Примеры](#примеры)
-5. [Дополнительные материалы](#дополнительные-материалы)
+- [TeX Docs](#tex-docs)
+  - [Содержание](#содержание)
+  - [Общее описание](#общее-описание)
+  - [Параметры](#параметры)
+  - [Теги](#теги)
+  - [Примеры](#примеры)
+    - [inventory/hosts (Nexus proxy сервер и RH Satellite)](#inventoryhosts-nexus-proxy-сервер-и-rh-satellite)
+  - [Дополнительные материалы](#дополнительные-материалы)
 
 ## Общее описание
 
