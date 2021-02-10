@@ -4,7 +4,7 @@
       - build
       - deploy
     variables:
-      DIR_NAME: "Ansible Roles"
+      DIR_NAME: "TeX Docs"
 
     cleanup_pre:
       tags:
