@@ -55,10 +55,20 @@ mkdocs_packages:
   - webencodings==0.5.1
   - click-man
   - mkpdfs-mkdocs
+  - mkdocs-autozip
+  - mkdocs-bootstrap-tables-plugin
   - mkdocs-pdf-export-plugin
+  - mkdocs-macros-plugin
   - mkdocs-material>=5.3.3
   - mkdocs-material-extensions>=1.0
+  - mkdocs-git-revision-date-plugin
   - mkdocs-git-revision-date-localized-plugin==0.5.2 
+  
+  
+pip3 install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd mkdocs-git-revision-date-plugin
+pip3 install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd mkdocs-bootstrap-tables-plugin
+pip3 install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd mkdocs-autozip
+pip3 install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd mkdocs-exclude
 
 pypi_proxy_arg: []
 
