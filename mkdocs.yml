@@ -13,13 +13,20 @@ nav:
     - Дополнительные материалы: 'seealso.md'
 
 plugins:
-    - search
-    - pdf-export:
-        verbose: true
-        media_type: print
-        combined: true
-        combined_output_path: pdf/TeX_Docs.pdf
-        theme_handler_path: theme-handler/material.py
+  - search:
+      lang:
+        - en
+        - ru
+  - git-revision-date-localized
+      type: date
+  - git-revision-date
+  - macros
+  - pdf-export:
+      verbose: true
+      media_type: print
+      combined: true
+      combined_output_path: pdf/TeX_Docs.pdf
+      theme_handler_path: theme-handler/material.py
 
 theme:
   name: material
