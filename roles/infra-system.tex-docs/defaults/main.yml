@@ -41,7 +41,7 @@ mkdocs_packages:
   - markdown-include
   - MarkupSafe==1.1.1
   - mike
-  - mkdocs==1.1
+  - mkdocs>=1.1
   - pdfrw==0.4
   - Pillow==6.2.2
   - pycparser==2.18
