@@ -12,6 +12,7 @@ Copyright (C) 2020 Dmitriy Prigoda deamon.none@gmail.com This script is free sof
   - [Теги](#теги)
   - [Примеры](#примеры)
     - [inventory/hosts (Nexus proxy сервер и RH Satellite)](#inventoryhosts-nexus-proxy-сервер-и-rh-satellite)
+  - [Документация](#документация)
   - [Дополнительные материалы](#дополнительные-материалы)
 
 ## Общее описание
@@ -78,6 +79,10 @@ TeX Docs - сервис автоматической генерации доку
     rhsm_key='gitlab'
     rhsm_org='ORG'
 ```
+
+## Документация
+
+[Документация](https://d34m0nn0n3.github.io/ansible-ssr-texdocs/)
 
 ## Дополнительные материалы
 
