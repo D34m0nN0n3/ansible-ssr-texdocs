@@ -11,10 +11,10 @@ TeX Docs - сервис автоматической генерации доку
 * MKDocs-Material
 * MKDocs-pdf-export-plugin
 
-!!! note
+!!! note "Примечание"
     Решение является модульным за счет подключения различных модулей написанных на Python.
 
-!!! info
+!!! info "Для информации"
     В данном руководстве приводятся рекомендации для создания документации и ссылки на дополнительные материалы. 
 
 ## Структура проекта
@@ -33,78 +33,187 @@ TeX Docs - сервис автоматической генерации доку
     |-material
     |        |_ ...
     |
-    |-theme-handler
-    |             |_ ...
     |
     |_mkdocs.yml
 
 | Директории и файлы       | Описание                                |
 |:------------------------:|:----------------------------------------|
 | docs                     | основная директория с документацией     |
-| material и theme-handler | тема формирования стиля `html` страниц  |
+| material                 | тема формирования стиля `html` страниц  |
 | mkdocs.yml               | конфигурационный файл с настройками     |
 
 ## Файл конфигурации проекта  
 
-!!! example "mkdocs.yml"
+??? example "texdocs.yml"
     ``` yaml
-    site_name: TeX Docs
-    site_description: "Documentation for TeX Docs site"
-    copyright: Copyright &copy; <a href="https://github.com/D34m0nN0n3">Dmitriy Prigoda</a>.
-
-    repo_name: ""
-    repo_url: ""
-
+    site_name: "\< Название документации >\"
+    site_author: "\< Автор >\"
+    site_description: >-
+      \< Название под которым документ будет опубликован в TexDocs >\
+    
+    repo_name: \< Идентификатор git репозитории >\
+    repo_url: \< URL git репозитории >\
+    edit_uri: ""
+    
     use_directory_urls: false
-
+    copyright: Copyright &copy; <a href="\< Адрес сайта автора >\">\< Автор >\</a>.
+    
     nav:
-        - Общее описание: 'index.md'
-        - Дополнительные материалы: 'seealso.md'
-
+        - '\< Название главной страницы >\': 'index.md'
+        - '\< Название раздела >\':
+            - '\< Название страницы >\': '\<  >\.md'
     plugins:
-        - search
-        - pdf-export:
-            verbose: true
-            media_type: print
-            combined: true
-            combined_output_path: 'pdf/combined.pdf'
-            theme_handler_path: theme-handler/material.py
-
-    theme:
-    name: material
-      ...
-
-    extra:
-        search:
-            language: 'ru, en'
-
+      - autolinks
+      - search:
+          lang:
+            - en
+            - ru
+      - section-index
+      - table-reader
+      - thumbnails:
+          style: margin-top:5px;margin-bottom:5px;margin-right:25px  
+      - git-revision-date-localized
+      - git-revision-date
+      - macros
+      - minify:
+          minify_html: true
+      - with-pdf:
+          copyright: \< Автор >\
+          cover_subtitle: ''
+          output_path: \< Имя файла PDF >\.pdf
+    
     extra_css:
-        - material/assets/css/main.css
-        - material/assets/libs/magnific-popup/magnific-popup.css
-
+        - assets/extra.css
+    
     extra_javascript:
-        - material/assets/libs/jquery/jquery-3.4.0.min.js
-        - material/assets/libs/magnific-popup/jquery.magnific-popup.min.js
-        - material/assets/js/main.js
-
+      - assets/extra.js
+      - assets/tex-mml-chtml.js
+    
+    theme:
+      name: material
+      custom_dir: material
+      language: ru
+      features:
+        - content.tabs.link
+        - navigation.indexes
+        - navigation.top
+        - navigation.tracking
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.integrate
+      palette:
+        - scheme: default
+          primary: blue grey
+          accent: red
+      font:
+        text: Roboto
+        code: Roboto Mono
+      favicon: assets/img/favicon/favicon.png
+      logo: assets/img/logo/logo.svg
+    
     markdown_extensions:
-    - admonition
-    - codehilite:
+      - admonition
+      - codehilite:
           linenums: true
-    - toc:
+      - toc:
           permalink: true
-    ...
+          slugify: !!python/name:pymdownx.slugs.uslugify
+      - meta
+      - pymdownx.betterem:
+          smart_enable: all
+      - pymdownx.caret
+      - pymdownx.details
+      - pymdownx.inlinehilite
+      - pymdownx.magiclink
+      - pymdownx.mark
+      - pymdownx.smartsymbols
+      - pymdownx.superfences
+      - pymdownx.tabbed
+      - pymdownx.betterem:
+          smart_enable: all
+      - pymdownx.keys
+      - pymdownx.tasklist:
+          custom_checkbox: true
+      - markdown_blockdiag:
+          format: svg
+      - markdown_include.include
+      - markdown.extensions.attr_list 
+    
+    extra:
+      generator: false
+      homepage: http://\<URL main site>\
+      social:
+        - icon: fontawesome/solid/home
+          link: http://\<URL main site>\
+          name: Tex-docs
+        - icon: fontawesome/brands/gitlab
+          link: https://\<URL git server>\
     ```
 
 | Разделы и параметры      | Описание                                                                    |
 |:------------------------:|:----------------------------------------------------------------------------|
-| site_name                | Основное имя проекта                                                        |
-| site_description         | Краткое описание проекта                                                    |
+| site_name                | Имя проекта                                                                 |
+| site_description         | Описание проекта                                                            |
 | repo_name                | Имя проекта в `git`, необходимо для формирования ссылки для редактирования  |
 | repo_url                 | Ссылка на проект в `git`                                                    |
 | nav                      | Подключаемые файлы с документацией                                          |
 | plugins                  | Подключяемые расширения                                                     |
-| combined_output_path     | Имя файла `pdf`. По умолчанию: `combined.pdf`                               |
+| output_path              | Имя файла `pdf`. По умолчанию: `combined.pdf`                               |
 | theme                    | Тема оформления `html` страниц                                              |
 | extra                    | Дополнительные настройки                                                    |
 | markdown_extensions      | Модули обработки разметки                                                   |
+
+## Установленные расширения
+
+??? done "Список расширений"
+    * beautifulsoup4>=4.6.3
+    * cairocffi
+    * CairoSVG>=2.1.3
+    * cffi>=1.11.5
+    * click>=6.7
+    * cssselect2>=0.2.1
+    * defusedxml>=0.5.0
+    * html5lib>=1.0.1
+    * livereload>=2.5.2
+    * Markdown>=3.2
+    * markdown-blockdiag
+    * markdown-include
+    * MarkupSafe>=1.1.1
+    * mike
+    * mkdocs>=1.1
+    * pdfrw>=0.4
+    * Pillow>=6.2.2
+    * pycparser>=2.18
+    * pygments>=2.4
+    * pymdown-extensions>=7.0
+    * Pyphen>=0.9.5
+    * PyYAML>=3.12
+    * six>=1.11.0
+    * tinycss2>=0.6.1
+    * tornado>=5.1
+    * WeasyPrint>=44
+    * webencodings>=0.5.1
+    * click-man
+    * mkpdfs-mkdocs
+    * mkdocs-autozip
+    * mkdocs-encryptcontent-plugin
+    * mkdocs-exclude
+    * mkdocs-bootstrap-tables-plugin
+    * mkdocs-macros-plugin
+    * mkdocs-material>=5.3.3
+    * mkdocs-material-extensions>=1.0
+    * mkdocs-git-revision-date-plugin
+    * mkdocs-git-revision-date-localized-plugin
+    * mkdocs-markdownextradata-plugin
+    * mkdocs-mdpo-plugin
+    * mkdocs-minify-plugin
+    * mkdocs-newsletter
+    * mkdocs-rss-plugin
+    * mkdocs-section-index
+    * mkdocs-table-reader-plugin
+    * mkdocs-tooltipster-links-plugin
+    * mkdocs-thumbnails
+    * mkdocs-user-defined-values
+    * mkdocs-vim-md-tags-plugin
+    * mkdocs-with-pdf
