@@ -12,7 +12,7 @@ TeX Docs - сервис автоматической генерации доку
 
 * MKDocs
 * MKDocs-Material
-* MKDocs-pdf-export-plugin
+* mkdocs-with-pdf
 
 !!! note "Примечание"
     Решение является модульным за счет подключения различных модулей написанных на Python.
