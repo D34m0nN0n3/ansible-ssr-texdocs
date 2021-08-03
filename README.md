@@ -22,7 +22,7 @@ TeX Docs - сервис автоматической генерации доку
 Устанавливаемые компоненты:
 
 1. MKdocs
-2. Plugins (MKDocs-Material, MKDocs-pdf-export-plugin)
+2. Plugins (MKDocs-Material, mkdocs-with-pdf)
 3. Nginx
 4. GitLab-Runner
 
